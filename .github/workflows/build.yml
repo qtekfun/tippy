@@ -3,6 +3,7 @@ name: Android Build
 on:
   push:
     branches: [ main ] # Trigger on pushes to the main branch
+  workflow_dispatch:  # Add this line to enable manual triggering
 
 jobs:
   build:
