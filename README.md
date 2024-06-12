@@ -1,0 +1,1 @@
+[![Android Build](https://github.com/qtekfun/tippy/actions/workflows/build.yml/badge.svg)](https://github.com/qtekfun/tippy/actions/workflows/build.yml)
