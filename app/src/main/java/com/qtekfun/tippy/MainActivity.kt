@@ -6,15 +6,22 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,29 +38,60 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TippyTheme {
-                Column {
-                    Cell()
-                }
+                GolfGame()
             }
         }
     }
 }
 
 @Composable
-fun CellTexts(text: String, style: TextStyle) {
-    Column(modifier = Modifier.padding(8.dp)) {
-        Text(
-            "This is a cell with text: ",
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.primary
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(text = text, style = style, color = MaterialTheme.colorScheme.secondary)
+fun GolfGame(holes: Int = 18) {val scrollState = rememberScrollState()
+    Column(modifier = Modifier.verticalScroll(scrollState)) {
+        for (i in 1..holes) {
+            Hole(i)
+        }
     }
 }
 
 @Composable
-fun Cell() {
+fun NumberInput(initialValue: Int, onValueChange: (Int) -> Unit) {
+
+    var currentValue = initialValue//by remember { mutableIntStateOf(initialValue) }
+
+    Row(horizontalArrangement = Arrangement.Center) {
+        Button(onClick = {
+            currentValue--
+            onValueChange(currentValue)
+        }) {
+            Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Decrement")
+        }
+        Spacer(modifier = Modifier.width(12.dp))
+        Text(text = currentValue.toString(), style = MaterialTheme.typography.labelLarge)
+        Spacer(modifier = Modifier.width(12.dp))
+        Button(onClick = {
+            currentValue++
+            onValueChange(currentValue)
+        }) {
+            Icon(Icons.Default.KeyboardArrowUp, contentDescription = "Increment")
+        }
+    }
+}
+
+@Composable
+fun HoleData(text: String, style: TextStyle) {
+    Column(modifier = Modifier.padding(8.dp)) {
+        Text(
+            text,
+            style = style,
+            color = MaterialTheme.colorScheme.primary
+        )
+        NumberInput(initialValue = 0) {
+        }
+    }
+}
+
+@Composable
+fun Hole(number: Int = 0) {
     Row(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.primaryContainer)
@@ -70,7 +108,7 @@ fun Cell() {
             contentDescription = "Test Image"
         )
         Spacer(modifier = Modifier.width(6.dp))
-        CellTexts("I've got it", MaterialTheme.typography.labelLarge)
+        HoleData("Hole number $number", MaterialTheme.typography.labelLarge)
     }
 }
 
@@ -79,8 +117,11 @@ fun Cell() {
 @Composable
 fun GreetingPreview() {
     TippyTheme {
-        Column {
-            Cell()
+        val scrollState = rememberScrollState()
+        Column(modifier = Modifier.verticalScroll(scrollState)) {
+            for (i in 1..18) {
+                Hole(i)
+            }
         }
     }
 }
