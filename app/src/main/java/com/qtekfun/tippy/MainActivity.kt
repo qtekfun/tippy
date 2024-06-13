@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -53,9 +54,12 @@ fun CellTexts(text: String, style: TextStyle) {
 
 @Composable
 fun Cell() {
-    Row(modifier = Modifier
-        .background(MaterialTheme.colorScheme.primaryContainer)
-        .padding(4.dp)) {
+    Row(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.primaryContainer)
+            .padding(4.dp)
+            .fillMaxWidth()
+    ) {
         Image(
             modifier = Modifier
                 .size(64.dp)
@@ -63,14 +67,14 @@ fun Cell() {
                 .background(MaterialTheme.colorScheme.primary)
                 .padding(8.dp),
             painter = painterResource(id = R.drawable.ic_launcher_foreground),
-            contentDescription = "Test Iamge"
+            contentDescription = "Test Image"
         )
         Spacer(modifier = Modifier.width(6.dp))
         CellTexts("I've got it", MaterialTheme.typography.labelLarge)
     }
 }
 
-@Preview()
+@Preview(showSystemUi = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun GreetingPreview() {
