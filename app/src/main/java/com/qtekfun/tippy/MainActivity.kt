@@ -25,6 +25,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -56,7 +60,7 @@ fun GolfGame(holes: Int = 18) {val scrollState = rememberScrollState()
 @Composable
 fun NumberInput(initialValue: Int, onValueChange: (Int) -> Unit) {
 
-    var currentValue = initialValue//by remember { mutableIntStateOf(initialValue) }
+    var currentValue by remember { mutableIntStateOf(initialValue) }
 
     Row(horizontalArrangement = Arrangement.Center) {
         Button(onClick = {
@@ -65,9 +69,9 @@ fun NumberInput(initialValue: Int, onValueChange: (Int) -> Unit) {
         }) {
             Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Decrement")
         }
-        Spacer(modifier = Modifier.width(12.dp))
-        Text(text = currentValue.toString(), style = MaterialTheme.typography.labelLarge)
-        Spacer(modifier = Modifier.width(12.dp))
+        Spacer(modifier = Modifier.width(40.dp))
+        Text(text = currentValue.toString(), style = MaterialTheme.typography.titleLarge)
+        Spacer(modifier = Modifier.width(40.dp))
         Button(onClick = {
             currentValue++
             onValueChange(currentValue)
